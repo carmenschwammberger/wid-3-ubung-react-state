@@ -40,7 +40,7 @@ export const Aufgabe2 = () => (
         erzeugt eine Interaktion mit der Checkbox eine Änderung von State.
       </p>
       <p>
-        2.3) Füge dem Input-Element ein Attribut{" "}
+        2.3) Füge dem InputElement ein Attribut{" "}
         <span className="Emphasis">checked={}</span> hinzu. In die
         {}-Klammern schreibst du deine State-Variable. Damit machst du aus einem
         "unkontrollierten" HTML-Element ein, von React State, "kontrolliertes"
