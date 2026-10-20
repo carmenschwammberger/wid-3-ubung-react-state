@@ -5,6 +5,10 @@ import { Aufgabe1, Aufgabe2, Aufgabe3, Aufgabe4 } from "./static/ExText";
 function App() {
   const [state, setState] = useState("defaultWert"); // Beispiel für einen "useState-Hook".
   const [counter, setCounter] = useState(0); // useState Hook für Aufgabe 1
+  const [isChecked, setIsChecked] = useState(true);
+  const [text, setText] = useState("");
+  const [dropdown, setDropdown] = useState("left");
+  const [fontSize, setFontSize] = useState(10);
 
   // Du benötigst für jede Aufgabe einen weiteren "useState-Hook", welchen du am besten hier platzierst. Achte darauf, einen passenden Datentype als "default Wert" anzugeben.
 
@@ -30,6 +34,12 @@ function App() {
            * Unter diesem Kommentar fügst du zwei weitere Buttons hinzu.
            * Setze das Attribut className="Button" um das vordefinierte Styling für einen Button zu übernehmen.
            */}
+           <button className="Button" onClick={() => setCounter(counter + 5)}>
+            + 5
+           </button>
+           <button className="Button" onClick={() => setCounter(0)}>
+            Reset
+           </button>
         </div>
       </div>
 
@@ -43,12 +53,12 @@ function App() {
           <input
             id="Checkbox"
             type="checkbox"
+            checked={isChecked}
             onChange={
-              (e) =>
-                console.log(
-                  e.target.checked,
-                ) /* Hier brauchst du wieder eine setState Funktion. Sie kann e.target.checked als Argument bekommen und dies in State schreiben. */
+              (e) => setIsChecked(e.target.checked)
+                /* Hier brauchst du wieder eine setState Funktion. Sie kann e.target.checked als Argument bekommen und dies in State schreiben. */
             }
+
           />
           <div>
             {/*
@@ -57,8 +67,8 @@ function App() {
              * Schreibe das Element dann so um, dass bei true die eine Farbe, und bei false die andere Farbe benutzt wird.
              * Gleiches machst du für den Text.
              */}
-            <p style={{ color: "#007cc3" /*  oder "#ff00ff" */ }}>
-              {"JA" /*  oder "NEIN" */}
+            <p style={{ color: isChecked ? "#007cc3" : "#ff00ff" }}>
+              {isChecked ? "JA" : "NEIN"}
             </p>
           </div>
         </div>
@@ -74,15 +84,11 @@ function App() {
           <input
             id="textfeld"
             type="text"
-            onChange={
-              (e) =>
-                console.log(
-                  e.target.value,
-                ) /* Hier brauchst du wieder eine setState Funktion. Sie soll e.target.value als Argument bekommen und dies in State schreiben. */
-            }
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           />
           <div>
-            <p>{/*  Hier liest du die State Variable aus.  */}</p>
+            <p>{text/*  Hier liest du die State Variable aus.  */}</p>
           </div>
         </div>
       </div>
@@ -100,14 +106,8 @@ function App() {
            */}
           <select
             className="Dropdown"
-            onChange={(event) => {
-              console.log(
-                "event.target.value ist: ",
-                event.target.value,
-                " der Datentype ist: ",
-                typeof event.target.value,
-              );
-            }}
+            value={dropdown}
+            onChange={(event) => setDropdown(event.target.value)}
           >
             <option value="left">Links</option>
             <option value="center">Mittig</option>
@@ -118,14 +118,25 @@ function App() {
            * Du brauchst einen weiteren useState-Hook, der das Ergebnis der Auswahl als Zahl speichert.
            * Achtung - der Handler gibt dir die Zahl als Text (String) zurück. Konvertertiere diese mit `parseInt()`zu einer Zahl ("number"). Das kannst du direkt in der setState Funktion tun.
            */}
+           <select
+            className="Dropdown"
+            value={fontSize}
+            onChange={(event) => setFontSize(parseInt(event.target.value))}
+          >
+            <option value={10}>10</option>
+            <option value={12}>12</option>
+            <option value={14}>14</option>
+            <option value={16}>16</option>
+           </select>
+           
 
           <div>
             <p
               id="DynamicText"
               style={
                 {
-                  textAlign: "center",
-                  fontSize: 10,
+                  textAlign: dropdown,
+                  fontSize: fontSize,
                 } /* Diese statischen Werte möchtest du an "State" binden. Überprüfe ob deine Interaktionen den Text verändert  */
               }
             >
